@@ -1,2 +1,7 @@
 ^README\.Rmd$
 ^LICENSE\.md$
+^install\.R$
+^postBuild$
+^_quarto\.yml$
+^apt\.txt$
+^\.jupyter$
