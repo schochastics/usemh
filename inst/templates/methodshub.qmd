@@ -3,9 +3,8 @@ title: {{Package}} - {{Title}}
 format:
   html:
     embed-resources: true
+  gfm: default
 ---
-
-# {{Package}} - {{Title}}
 
 ## Description
 
@@ -25,6 +24,8 @@ format:
 
 <!-- - Include usecases from social sciences that would make this method applicable in a certain scenario.  -->
 <!-- The use cases or research questions mentioned should arise from the latest social science literature cited in the description. -->
+
+This package was used in the literature to valid topic models and prediction models trained on text data, e.g. [Rauchfleisch et al. (2023)](10.1080/17512786.2022.2110928), [Rothut, et al. (2023)](https://doi.org/10.1177/14614448231164409), [Eisele, et al. (2023)](https://doi.org/10.1080/19312458.2023.2230560).
 
 ## Repository structure
 
@@ -47,6 +48,8 @@ install.packages("{{Package}}")
 
 <!-- - The input data has to be a Digital Behavioral Data (DBD) Dataset -->
 <!-- - You can provide link to a public DBD dataset. GESIS DBD datasets (https://www.gesis.org/en/institute/digital-behavioral-data) -->
+
+`oolong` accepts topic models and prediction models trained on text data.
 
 ## Sample Input and Output Data
 
