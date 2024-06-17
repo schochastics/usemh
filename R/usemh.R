@@ -34,7 +34,7 @@ use_mh <- function(open = rlang::is_interactive()) {
     usethis::use_template("methodshub.qmd",
                           data = list("Package" = Package,
                                       "Title" = desc$get("Title"),
-                                      "Description" = desc$get("Description"),
+                                      "Description" = .fix_dois(desc$get("Description")),
                                       "Maintainer" = desc$get_maintainer(),
                                       "BugReports" = bug_reports),
                           ignore = FALSE, package = "usemh",
@@ -71,3 +71,19 @@ zap_mh <- function() {
     }
     return(tempd)   
 }
+
+.convert_doi_md <- function(doi) {
+    doi <- stringr::str_replace(doi, "^\\<doi:", "")
+    doi <- stringr::str_replace(doi, "\\>$", "")
+    paste0("[<doi:", doi, ">](https://doi.org/", doi, ")")
+}
+
+.fix_dois <- function(description) {
+    dois <- as.character(stringr::str_extract_all(description, "\\<doi:[0-9a-zA-Z\\./]+\\>", simplify = TRUE))
+
+    for (doi in dois) {
+        description <- stringr::str_replace(description, stringr::fixed(doi), .convert_doi_md(doi))
+    }
+    return(description)
+}
+
