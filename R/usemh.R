@@ -3,6 +3,7 @@ use_mh <- function(open = rlang::is_interactive()) {
     usethis:::check_is_package("use_mh()")
     ## Generate cff
     cffr::cff_write(cffr::cff_create()) ## auto add to .Rbuildignore
+    usethis::use_build_ignore("CITATION.cff")
     ## install.R
     desc <- usethis:::proj_desc()
     Package <- desc$get("Package")
@@ -21,7 +22,7 @@ use_mh <- function(open = rlang::is_interactive()) {
         x <- file.copy(file.path(tempd, Package, "postBuild"), ".")
         x <- file.copy(file.path(tempd, Package, "apt.txt"), ".")
         x <- file.copy(file.path(tempd, Package, ".jupyter"), ".", recursive = TRUE)
-        usethis::use_build_ignore(c("postBuild", "_quarto.yml", "apt.txt", ".jupyter"))
+        usethis::use_build_ignore(c("postBuild", "_quarto.yml", "apt.txt", ".jupyter", ".quarto"))
     }
     ## Hacky>
     usethis::use_build_ignore("^methodshub", escape = FALSE)
