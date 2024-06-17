@@ -12,13 +12,13 @@ use_mh <- function(open = rlang::is_interactive()) {
     quarto_there <- file.exists("_quarto.yml")
     ## <Hacky
     if (!quarto_there) {
-        tempd <- tempdir()
+        tempd <- .gen_empty_dir()
         x <- quarto::quarto_create_project(name = Package, dir = tempd, quiet = TRUE, no_prompt = TRUE)
         quarto_proj_basepath <- file.path(tempd, Package)
         system(paste0("cd ", quarto_proj_basepath, "; quarto use binder --no-prompt"))
-        ## needed files    
+        ## needed files
+        usethis::use_template("quarto.yaml", "_quarto.yml", data = list("Package" = Package), package = "usemh")        
         x <- file.copy(file.path(tempd, Package, "postBuild"), ".")
-        x <- file.copy(file.path(tempd, Package, "_quarto.yml"), ".")
         x <- file.copy(file.path(tempd, Package, "apt.txt"), ".")
         x <- file.copy(file.path(tempd, Package, ".jupyter"), ".", recursive = TRUE)
         usethis::use_build_ignore(c("postBuild", "_quarto.yml", "apt.txt", ".jupyter"))
@@ -33,6 +33,37 @@ use_mh <- function(open = rlang::is_interactive()) {
                           open = open)
 }
 
+#' @export
+zap_mh <- function() {
+    ## TODO: Clean .Rbuildignore
+    usethis:::check_is_package("zap_mh()")
+    .zap("CITATION.cff")
+    .zap("_quarto.yml")
+    .zap("apt.txt")
+    .zap("install.R")
+    .zap("postBuild")
+    .zap("methodshub.qmd")
+    .zap(".jupyter")    
+}
+
 .get_field <- function(x, field) {
     x[which(colnames(x) == field)]
+}
+
+.zap <- function(file) {
+    if (file.exists(file)) {
+        unlink(file, recursive = TRUE, force = TRUE)
+    }
+}
+
+.gen_empty_dir <- function() {
+    continue <- TRUE
+    while (continue) {
+        tempd <- file.path(tempdir(), sample(100000,1))
+        if (!dir.exists(tempd)) {
+            dir.create(tempd)
+            continue <- FALSE
+        }
+    }
+    return(tempd)   
 }
