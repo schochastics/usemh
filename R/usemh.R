@@ -4,8 +4,8 @@ use_mh <- function(open = rlang::is_interactive()) {
     ## Generate cff
     cffr::cff_write(cffr::cff_create()) ## auto add to .Rbuildignore
     ## install.R
-    desc <- read.dcf("DESCRIPTION")
-    Package <- .get_field(desc, "Package")
+    desc <- usethis:::proj_desc()
+    Package <- desc$get("Package")
     usethis::use_template("install.R", data = list("Package" = Package), ignore = TRUE, package = "usemh")
     ## Capture the current postBuild in a temp. directory
     ## Not until this is fixed: quarto-dev/quarto-cli#9313
@@ -25,10 +25,18 @@ use_mh <- function(open = rlang::is_interactive()) {
     }
     ## Hacky>
     usethis::use_build_ignore("^methodshub", escape = FALSE)
+    bug_reports <- desc$get("BugReports")
+    if (is.na(bug_reports)) {
+        bug_reports <- ""
+    } else {
+        bug_reports <- paste0("Issue Tracker: [", bug_reports, "](", bug_reports, ")")
+    }
     usethis::use_template("methodshub.qmd",
                           data = list("Package" = Package,
-                                      "Title" = .get_field(desc, "Title"),
-                                      "Description" = .get_field(desc, "Description")),
+                                      "Title" = desc$get("Title"),
+                                      "Description" = desc$get("Description"),
+                                      "Maintainer" = desc$get_maintainer(),
+                                      "BugReports" = bug_reports),
                           ignore = FALSE, package = "usemh",
                           open = open)
 }
@@ -44,10 +52,6 @@ zap_mh <- function() {
     .zap("postBuild")
     .zap("methodshub.qmd")
     .zap(".jupyter")    
-}
-
-.get_field <- function(x, field) {
-    x[which(colnames(x) == field)]
 }
 
 .zap <- function(file) {

@@ -59,6 +59,10 @@ install.packages("{{Package}}")
 
 ## Contact Details
 
+Maintainer: {{{Maintainer}}}
+
+{{BugReports}}
+
 <!-- ## Publication -->
 <!-- - Include information on publications or articles related to the method, if applicable. -->
 
