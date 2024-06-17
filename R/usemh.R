@@ -41,7 +41,6 @@ use_mh <- function(open = rlang::is_interactive()) {
                           open = open)
 }
 
-#' @export
 zap_mh <- function() {
     ## TODO: Clean .Rbuildignore
     usethis:::check_is_package("zap_mh()")
