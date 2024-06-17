@@ -1,0 +1,17 @@
+Package: usemh
+Title: Because One Readme Is Not Enough
+Version: 0.0.0.9000
+Authors@R: 
+    person("Chung-hong", "Chan", , "chainsawtiney@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6232-7530"))
+Description: Automatically generate the boilderplate for a standard reusable R package to be submitted as Method Entry on MH, in the 'usethis' style. It is for standard R package (probably already on CRAN), not partial R code.
+License: EUPL
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    rlang,
+    usethis
