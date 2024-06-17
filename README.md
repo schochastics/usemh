@@ -1,24 +1,13 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # usemh
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of usemh is to ...
+The goal of usemh is to …
 
 ## Installation
 
@@ -30,9 +19,11 @@ You can install the development version of usemh like so:
 
 ## Example
 
-Hopefully, it will generate all the boilerplate files for the MH submission.
+Hopefully, it will generate all the boilerplate files for the MH
+submission.
 
-```{r example}
+``` r
 library(usemh)
 use_mh()
+#> ✔ Setting active project to '/home/chainsawriot/dev/usemh'
 ```
