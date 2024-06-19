@@ -94,7 +94,7 @@ zap_mh <- function() {
 }
 
 .fix_dois <- function(description) {
-    dois <- as.character(stringr::str_extract_all(description, "\\<doi:[0-9a-zA-Z\\./]+\\>", simplify = TRUE))
+    dois <- as.character(stringr::str_extract_all(description, "\\<doi:[0-9a-zA-Z\\-\\./]+\\>", simplify = TRUE))
 
     for (doi in dois) {
         description <- stringr::str_replace(description, stringr::fixed(doi), .convert_doi_md(doi))
