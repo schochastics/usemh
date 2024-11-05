@@ -2,7 +2,7 @@
 use_mh_tutorial_template <- function(title = "tutorial", dir = NULL, file = "index.qmd") {
     active_dir <- getwd()
     if (is.null(dir)) {
-        dir <- paste0(active_dir, "/", gsub(" ", "_", title))
+        dir <- file.path(active_dir, gsub(" ", "_", title))
     }
     if (dir.exists(dir)) {
         rlang::abort("a directory with the same name already exists.")
