@@ -2,7 +2,7 @@
 use_mh_tutorial_template <- function(title = "tutorial", dir = NULL, file = "index.qmd") {
     active_dir <- getwd()
     if (is.null(dir)) {
-        dir <- gsub(" ", "_", title)
+        dir <- paste0(active_dir, "/", gsub(" ", "_", title))
     }
     if (dir.exists(dir)) {
         stop("a directory with the same name already exists.")
@@ -17,8 +17,10 @@ use_mh_tutorial_template <- function(title = "tutorial", dir = NULL, file = "ind
         ), "_quarto.yml"
     )
     file.copy(system.file("templates", "tutorial.qmd", package = "usemh"), file)
+    file.copy(system.file("templates", "apa.csl", package = "usemh"), "apa.csl")
+    file.copy(system.file("templates", "references.bib", package = "usemh"), "references.bib")
     write("/.quarto/", ".gitignore", append = TRUE)
-    cli::cli_alert_info("basic tutorial files created in {dir}. After finishing writing the tutorial run use_mh_tutorial_utils()")
+    cli::cli_alert_info("basic tutorial files created in {dir}. After finishing writing the tutorial run {.fn use_mh_tutorial_utils}")
     on.exit(setwd(active_dir))
 }
 
