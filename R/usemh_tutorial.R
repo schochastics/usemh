@@ -5,7 +5,7 @@ use_mh_tutorial_template <- function(title = "tutorial", dir = NULL, file = "ind
         dir <- paste0(active_dir, "/", gsub(" ", "_", title))
     }
     if (dir.exists(dir)) {
-        stop("a directory with the same name already exists.")
+        rlang::abort("a directory with the same name already exists.")
     }
     dir.create(dir)
     setwd(dir)
@@ -25,7 +25,24 @@ use_mh_tutorial_template <- function(title = "tutorial", dir = NULL, file = "ind
 }
 
 #' @export
-use_mh_tutorial_utils <- function(title = "tutorial", file = "index.qmd", overwrite = TRUE) {
+use_mh_tutorial_utils <- function(title = NULL, file = NULL, overwrite = TRUE) {
+    if (!quarto::is_using_quarto()) {
+        rlang::abort("no tutorial (qmd file) found in current directory.")
+    }
+    if (is.null(file)) {
+        qmd_files <- list.files(pattern = "*qmd")
+        if (length(qmd_files) > 1) {
+            rlang::abort("more than one qmd file found, please specify file parameter")
+        }
+        file <- qmd_files
+    }
+    if (is.null(title)) {
+        txt <- suppressWarnings(readLines(file))
+        title <- gsub("title: ", "", txt[grepl("^title:", txt)])
+        if (length(title) == 0) {
+            rlang::abort("no title field found in file.")
+        }
+    }
     if (!file.exists("_quarto.yml") || isTRUE(overwrite)) {
         usethis::use_template(
             "quarto.yaml", "_quarto.yml",
